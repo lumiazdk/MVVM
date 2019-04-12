@@ -23,7 +23,6 @@ class Watcher {
         let newValue = CompileUtil.getVal(this.vm, this.exp);
         // 获取旧值
         let oldValue = this.value;
-        console.log(this.value)
 
         // 如果新值和旧值不相等，就执行 callback 对 dom 进行更新
         if (newValue !== oldValue) {

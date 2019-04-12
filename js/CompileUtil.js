@@ -5,8 +5,6 @@ CompileUtil.updater = {
     // 文本更新
     textUpdater(node, value) {
         node.textContent = value;
-        console.log(value)
-        console.log(node)
     },
     // 输入框更新
     modelUpdater(node, value) {
@@ -36,11 +34,9 @@ CompileUtil.getTextVal = function (vm, exp) {
 // 设置 data 值的方法
 CompileUtil.setVal = function (vm, exp, newVal) {
     exp = exp.split(".");
-    console.log(newVal + '22')
     return exp.reduce((prev, next, currentIndex) => {
         // 如果当前归并的为数组的最后一项，则将新值设置到该属性
         if (currentIndex === exp.length - 1) {
-            console.log(prev[next])
             return prev[next] = newVal
         }
 
@@ -63,13 +59,11 @@ CompileUtil.model = function (node, vm, exp) {
     node.addEventListener('input', e => {
         // 获取输入的新值
         let newValue = e.target.value;
-        console.log(newValue)
         // 更新到节点
         this.setVal(vm, exp, newValue);
     });
 
     // 第一次设置值
-    console.log(updateFn)
     updateFn && updateFn(node, value);
 };
 
@@ -80,7 +74,6 @@ CompileUtil.text = function (node, vm, exp) {
 
     // 获取 data 中对应的变量的值
     let value = this.getTextVal(vm, exp);
-    console.log(value)
 
     // 通过正则替换，将取到数据中的值替换掉 {{ }}
     exp.replace(/\{\{([^}]+)\}\}/g, (...args) => {
@@ -93,6 +86,10 @@ CompileUtil.text = function (node, vm, exp) {
     });
 
     // 第一次设置值
-    console.log(value)
     updateFn && updateFn(node, value);
 };
+CompileUtil.on = function (node, vm, exp) {
+    node.addEventListener('click', function () {
+        vm.$methods[exp].call(vm)
+    });
+}

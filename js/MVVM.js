@@ -3,7 +3,7 @@ class MVVM {
         // 先把 el 和 data 挂在 MVVM 实例上
         this.$el = options.el;
         this.$data = options.data;
-
+        this.$methods = options.methods
         // 如果有要编译的模板就开始编译
         if (this.$el) {
             // 数据劫持，就是把对象所有的属性添加 get 和 set
@@ -11,7 +11,7 @@ class MVVM {
 
             // 将数据代理到实例上
             this.proxyData(this.$data);
-
+            this.proxyData(this.$methods);
             // 用数据和元素进行编译
             new Compile(this.$el, this);
         }

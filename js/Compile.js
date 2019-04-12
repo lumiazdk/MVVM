@@ -19,8 +19,13 @@ class Compile {
     isElementNode(node) {
         return node.nodeType === 1
     }
-    isDirective(name) {//是否指令
-        return name.includes("v-");
+    isDirective(name) { //是否指令
+        if (/\@(.*)/.test(name)) {
+            return true
+        } else if (name.includes("v-")) {
+            return true;
+
+        }
     }
     /**核心方法 */
     compileElement(node) {
@@ -35,6 +40,7 @@ class Compile {
 
                 // 取出方法名
                 let [, type] = attrName.split("-");
+                console.log(type)
 
                 // 调用指令对应得方法
                 CompileUtil[type](node, this.vm, exp);
@@ -43,7 +49,7 @@ class Compile {
     }
     compileText(node) {
         // 获取文本节点的内容
-        
+
         let exp = node.textContent;
         // 创建匹配 {{}} 的正则表达式
         let reg = /\{\{([^}]+)\}\}/g;
