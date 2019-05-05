@@ -6,13 +6,11 @@ class Compile {
             // 1、把这些真实的 Dom 移动到内存中，即 fragment（文档碎片）
             let fragment = this.node2fragment(this.el);
 
-            // ********** 以下为新增代码 **********
             // 2、将模板中的指令中的变量和 {{}} 中的变量替换成真实的数据
             this.compile(fragment);
 
             // 3、把编译好的 fragment 再塞回页面中
             this.el.appendChild(fragment);
-            // ********** 以上为新增代码 **********
         }
     }
     /**辅助方法 */
